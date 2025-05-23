@@ -1,94 +1,125 @@
-import { useState } from 'react'
-import { FaUpload, FaWallet, FaDownload, FaCheckCircle, FaTimesCircle, FaFileAlt } from 'react-icons/fa';
-import { TbCurrencyNaira } from 'react-icons/tb'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../auth/AuthContext';
+import { FaUser, FaEnvelope, FaSchool, FaIdCard, FaWallet, FaDownload, FaCheckCircle, FaTimesCircle, FaFileAlt } from 'react-icons/fa';
+
+import Header from './Header';
+import Document from './Document';
+import Pay from './Pay';
+import Progress from './Progress';
+import Api from '../Api';
+import Loading from './loading';
 
 const Dashboard = () => {
+
+  const [dashboard, setDashboard] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [certificateId, setCertificateId] = useState('');
-  
-  // Mock status
-  const statusItems = [
-    { id: 1, 
-      title: 'Document Uploaded',
-      completed: true,
-      icon: <FaFileAlt />
-    },
-    { id: 2,
-      title: 'Certificate Paid',
-      completed: false,
-      icon: <FaWallet />
-    },
-    { id: 3,
-      title: 'Certificate Downloaded',
-      completed: false,
-      icon: <FaDownload />
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    async function fetchDashboard() {
+      console.log("Use Effect")
+      try {
+        const response = await Api.get('dashboard/', {
+          headers: {
+            Authorization: `Token ${user.token}`,
+          }
+        })
+        setDashboard(response.data)
+      } catch (error) {
+        console.error('Submission error:', error);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+    fetchDashboard();
+  }, [])
+
+  const handleUploadSuccess = (type) => {
+    setDashboard(prev => ({
+      ...prev,
+      [type]: true
+    }));
+  };
+
+  if (loading) {
+    return <><Header /><Loading /></>;
+  }
 
   return (
+    <>
+    <Header />
     <div className="dashboard-container">
-      {/* Status Container */}
       <div className="status-container">
-        <h2>Application Progress</h2>
-        <div className="status-grid">
-          {statusItems.map(item => (
-            <div 
-              key={item.id}
-              className={`status-item ${item.completed ? 'completed' : ''}`}
-            >
-              <div className="status-icon">{item.icon}</div>
-              <h3>{item.title}</h3>
-              <div className="status-indicator">
-                {item.completed ? <FaCheckCircle /> : <FaTimesCircle />}
-              </div>
+        <div className="profile-header">
+          <h2><FaUser /> Student Profile</h2>
+        </div>
+        
+        <div className="profile-details">
+          <div className="detail-item">
+            <FaUser className="detail-icon" />
+            <div>
+              <label>Full Name</label>
+              <p>{dashboard.profile.full_name}</p>
             </div>
-          ))}
+          </div>
+          
+          <div className="detail-item">
+            <FaEnvelope className="detail-icon" />
+            <div>
+              <label>Email</label>
+              <p>{dashboard.email}</p>
+            </div>
+          </div>
+          
+          <div className="detail-item">
+            <FaSchool className="detail-icon" />
+            <div>
+              <label>Institution</label>
+              <p>{dashboard.profile.school}</p>
+            </div>
+          </div>
+          
+          <div className="detail-item">
+            <FaIdCard className="detail-icon" />
+            <div>
+              <label>Matric Number</label>
+              <p>{dashboard.profile.matric_number}</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <Progress 
+        documentUploaded={dashboard?.document_uploaded}
+        receiptUploaded={dashboard?.receipt_uploaded}
+        certificateStatus={dashboard?.certificate_status}
+      />
 
       {/* Upload Container */}
-      <div className="action-container upload-section">
-        <h2><FaUpload /> Upload Verification Document</h2>
-        <div className="upload-area">
-          <p>Drag & drop files here or</p>
-          <input 
-            type="file"
-            className="file-input"
-            onChange={(e) => console.log(e.target.files)}
-          />
-          <button className="browse-button">
-            Browse Files
-          </button>
-        </div>
-      </div>
+      <Document onUploadSuccess={() => handleUploadSuccess('document_uploaded')} />
 
       {/* Payment Container */}
-      <div className="action-container payment-section">
-        <h2><FaWallet /> Complete Payment</h2>
-        <div className="payment-details">
-          <p className="price"><TbCurrencyNaira /> <span>49.99</span></p>
-          <p className="description">One-time certificate fee</p>
-          <button className="pay-button">
-            Proceed to Payment
-          </button>
-        </div>
-      </div>
+      <Pay onUploadSuccess={() => handleUploadSuccess('receipt_uploaded')} />
 
       {/* Verification Container */}
       <div className="action-container verification-section">
-        <h2><FaCheckCircle /> Verify Certificate</h2>
-        <div className="verification-input">
-          <input
-            type="text"
-            placeholder="Enter Certificate ID"
-            value={certificateId}
-            onChange={(e) => setCertificateId(e.target.value)}
-          />
-          <button className="verify-button">
-            Check Validity
-          </button>
+            <h2><FaCheckCircle /> Verify Certificate</h2>
+            <div className="verification-input">
+            <input
+                type="text"
+                placeholder="Enter Certificate ID"
+                value={certificateId}
+                onChange={(e) => setCertificateId(e.target.value)}
+            />
+            <button className="verify-button">
+                Check Validity
+            </button>
+            </div>
         </div>
-      </div>
     </div>
+    </>
   );
 };
 

@@ -56,7 +56,26 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
+    receipt_uploaded = serializers.SerializerMethodField()
+    document_uploaded = serializers.SerializerMethodField()
+    certificate_status = serializers.SerializerMethodField()
     
     class Meta:
         model = CustomUser
-        fields = ('email', 'profile')
+        fields = (
+            'email',
+            'profile',
+            'receipt_uploaded',
+            'document_uploaded',
+        )
+
+    def receipt_uploaded(self, obj):
+        return hasattr(obj, 'payment')
+    
+    def document_uploaded(self, obj):
+        return hasattr(obj, 'document') 
+    
+    def certificate_status(self, obj):
+        if hasattr(obj, 'certificate'):
+            return 'approved' if self.user.certificate.approved else 'pending'
+        return 'none'

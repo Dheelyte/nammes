@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShieldAlt, FaCheckCircle, FaCertificate, FaLock, FaUser, FaEnvelope, FaSchool, FaIdCard, FaArrowAltCircleRight } from 'react-icons/fa';
+
+import toast from 'react-hot-toast';
 import { useAuth } from "./AuthContext";
 import Api from "../Api";
 
@@ -9,10 +11,10 @@ const Register = () => {
     const { login } = useAuth();
 
     const [formData, setFormData] = useState({
-        fullName: '',
+        full_name: '',
         email: '',
         school: '',
-        matricNumber: '',
+        matric_number: '',
         password: ''
       });
     
@@ -33,14 +35,17 @@ const Register = () => {
         const newErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
-        if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
-        if (!emailRegex.test(formData.email)) newErrors.email = 'Invalid email address';
-        if (!formData.school.trim()) newErrors.school = 'School name is required';
-        if (!formData.matricNumber.match(/^[A-Za-z0-9]{6,12}$/)) {
-          newErrors.matricNumber = 'Invalid matric number format';
+        if (!formData.full_name.trim()) newErrors.full_name = ['Full name is required'];
+        if (!emailRegex.test(formData.email)) newErrors.email = ['Invalid email address'];
+        if (!formData.school.trim()) newErrors.school = ['School name is required'];
+        if (!formData.matric_number.match(/^[A-Za-z0-9]{6,12}$/)) {
+          newErrors.matric_number = ['Invalid matric number format'];
         }
+        if (!formData.password.trim()) newErrors.password = ['Password is required'];
+
     
         setErrors(newErrors);
+        console.log(newErrors)
         return Object.keys(newErrors).length === 0;
       };
     
@@ -51,16 +56,20 @@ const Register = () => {
         setIsSubmitting(true);
         try {
           const response = await Api.post('user/register/', {
-            "full_name": formData.fullName,
+            "full_name": formData.full_name,
             "email": formData.email,
-            "matric_number": formData.matricNumber,
+            "matric_number": formData.matric_number,
             "school": formData.school,
             "password": formData.password
           })
           login(response.data);
           setSuccess(true);
+          toast.success('Registration successful');
+          toast.success('Registration successful');
         } catch (error) {
-          console.error('Submission error:', error);
+          toast.error('An error occurred');
+          console.log(error)
+          setErrors(error.response.data)
         } finally {
           setIsSubmitting(false);
         }
@@ -105,7 +114,7 @@ const Register = () => {
         
               {success ? (
                 <div className="success-message">
-                  <h3>🎉 Welcome aboard, {formData.fullName}!</h3>
+                  <h3>🎉 Welcome aboard, {formData.full_name}!</h3>
                   <p>Proceed to your dashboard for verification</p>
                   <Link to='/'>
                     <span>Go to Dashboard</span>
@@ -114,18 +123,18 @@ const Register = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  <div className={`form-group ${errors.fullName ? 'error' : ''}`}>
+                  <div className={`form-group ${errors.full_name ? 'error' : ''}`}>
                   <label>
                     <FaUser className="input-icon" />
                     Full Name
                   </label>
                   <input
                     type="text"
-                    name="fullName"
-                    value={formData.fullName}
+                    name="full_name"
+                    value={formData.full_name}
                     onChange={handleChange}
                   />
-                  {errors.fullName && <span className="error-message">{errors.fullName}</span>}
+                  {errors.full_name && <span className="error-message">{errors.full_name[0]}</span>}
                 </div>
     
                   <div className={`form-group ${errors.school ? 'error' : ''}`}>
@@ -144,21 +153,21 @@ const Register = () => {
                         <option key={index} value={school}>{school}</option>
                       ))}
                     </select>
-                    {errors.school && <span className="error-message">{errors.school}</span>}
+                    {errors.school && <span className="error-message">{errors.school[0]}</span>}
                   </div>
     
-                  <div className={`form-group ${errors.matricNumber ? 'error' : ''}`}>
+                  <div className={`form-group ${errors.matric_number ? 'error' : ''}`}>
                   <label>
                     <FaIdCard className="input-icon" />
                     Matriculation Number
                   </label>
                   <input
                     type="text"
-                    name="matricNumber"
-                    value={formData.matricNumber}
+                    name="matric_number"
+                    value={formData.matric_number}
                     onChange={handleChange}
                   />
-                  {errors.matricNumber && <span className="error-message">{errors.matricNumber}</span>}
+                  {errors.matric_number && <span className="error-message">{errors.matric_number[0]}</span>}
                 </div>
     
                 <div className={`form-group ${errors.email ? 'error' : ''}`}>
@@ -172,10 +181,10 @@ const Register = () => {
                     value={formData.email}
                     onChange={handleChange}
                   />
-                  {errors.email && <span className="error-message">{errors.email}</span>}
+                  {errors.email && <span className="error-message">{errors.email[0]}</span>}
                 </div>
                 
-                <div className={`form-group ${errors.matricNumber ? 'error' : ''}`}>
+                <div className={`form-group ${errors.password ? 'error' : ''}`}>
                   <label>
                     <FaLock className="input-icon" />
                     Password
@@ -186,7 +195,7 @@ const Register = () => {
                     value={formData.password}
                     onChange={handleChange}
                   />
-                  {errors.matricNumber && <span className="error-message">{errors.matricNumber}</span>}
+                  {errors.password && <span className="error-message">{errors.password[0]}</span>}
                 </div>
     
                 <button type="submit" disabled={isSubmitting} className="submit-btn">

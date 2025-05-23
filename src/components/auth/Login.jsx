@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaShieldAlt, FaCheckCircle, FaCertificate, FaLock, FaEnvelope } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+
 import { useAuth } from "./AuthContext";
 import Api from "../Api";
 
@@ -41,8 +43,9 @@ const Login = () => {
           })
           login(response.data);
           setSuccess(true);
+          toast.success('Log in successful');
         } catch (error) {
-          console.error('Submission error:', error);
+          console.error('Check your login information and try again');
         } finally {
           setIsSubmitting(false);
         }

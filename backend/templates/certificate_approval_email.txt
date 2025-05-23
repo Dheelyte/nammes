@@ -1,0 +1,15 @@
+Subject: Certificate Approved - {{ certificate_id }}
+
+Dear {{ student_name }},
+
+Your certificate (ID: {{ certificate_id }}) has been approved and is now available.
+
+Certificate Details:
+- Issue Date: {{ issue_date }}
+- Program: {{ program_name }}
+
+Download your certificate here:
+{{ download_link }}
+
+Best regards,
+The Academic Office

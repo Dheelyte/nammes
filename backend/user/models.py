@@ -41,6 +41,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
+    def receipt_uploaded(self):
+        return hasattr(self, 'payment')
+    
+    def document_uploaded(self):
+        return hasattr(self, 'document')
+    
+    def certificate_status(self):
+        if hasattr(self.user, 'certificate'):
+            return 'approved' if self.user.certificate.approved else 'pending'
+        return 'none'
+    
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

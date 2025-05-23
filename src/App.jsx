@@ -1,5 +1,7 @@
 import { AuthProvider } from './components/auth/AuthContext';
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import './App.css'
 import Register from './components/auth/Register'
@@ -10,6 +12,7 @@ import Pay from './components/core/Pay';
 const App = () => {
   return (
     <AuthProvider>
+      <Toaster />
       <Routes>
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
