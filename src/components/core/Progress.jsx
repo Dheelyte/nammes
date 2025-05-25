@@ -1,16 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
-import { FaCheck, FaTimes, FaArrowRight } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { FaCheck, FaArrowRight } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
 import { useAuth } from '../auth/AuthContext';
+import Certificate from './Certificate';
 import Api from '../Api';
 
-const Progress = ({ documentUploaded, receiptUploaded, certificateStatus }) => {
+const Progress = ({ dashboard }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [steps, setSteps] = useState([
-    { id: 1, title: "Document Upload", completed: documentUploaded, stage: "Stage 1" },
-    { id: 2, title: "Payment Completion", completed: receiptUploaded, stage: "Stage 2" },
+    { id: 1, title: "Document Upload", completed: dashboard.document_uploaded, stage: "Stage 1" },
+    { id: 2, title: "Payment Completion", completed: dashboard.receipt_uploaded, stage: "Stage 2" },
     { id: 3, title: "Certificate Issued", completed: true, stage: "Stage 3" },
   ]);
   const { user } = useAuth();
@@ -19,11 +20,11 @@ const Progress = ({ documentUploaded, receiptUploaded, certificateStatus }) => {
   useEffect(() => {
     setSteps(prevSteps => {
       const newSteps = [...prevSteps];
-      newSteps[0].completed = documentUploaded;
-      newSteps[1].completed = receiptUploaded;
+      newSteps[0].completed = dashboard.document_uploaded;
+      newSteps[1].completed = dashboard.receipt_uploaded;
       return newSteps;
     });
-  }, [documentUploaded, receiptUploaded]);
+  }, [dashboard.document_uploaded, dashboard.receipt_uploaded]);
 
   const handleCreateCertificate = async (e) => {
     e.preventDefault();
@@ -35,11 +36,16 @@ const Progress = ({ documentUploaded, receiptUploaded, certificateStatus }) => {
           Authorization: `Token ${user.token}`,
         }
       })
+      toast.success("Certificate application successful")
     } catch (error) {
-      toast.error('An error occurred', error);
+      toast.error(error.response.data[0]);
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  const handleDownloadCertificate = () => {
+    toast.loading("Certificate Downloading...")
   }
 
   const allStepsCompleted = steps.every(step => step.completed);
@@ -77,22 +83,22 @@ const Progress = ({ documentUploaded, receiptUploaded, certificateStatus }) => {
       </div>
 
       {
-        certificateStatus === "none" && (
+        dashboard.certificate_status === "none" && (
         <button 
           className="apply-button"
           disabled={!allStepsCompleted}
           onClick={handleCreateCertificate}
         >
-          {allStepsCompleted ? "Download Certificate" : "Complete All Steps to Apply"}
+          {allStepsCompleted ? "Request Certificate" : "Complete All Steps to Apply"}
         </button>
         )
       }
 
       {
-        certificateStatus === "pending" && (
+        dashboard.certificate_status === "pending" && (
           <button 
           className="apply-button"
-          onClick={handleCreateCertificate}
+          disabled={true}
         >
           Under review
         </button>
@@ -100,13 +106,8 @@ const Progress = ({ documentUploaded, receiptUploaded, certificateStatus }) => {
       }
 
       {
-        certificateStatus === "approved" && (
-        <button 
-          className="apply-button"
-          onClick={handleCreateCertificate}
-        >
-          Download Certificate
-        </button>
+        dashboard.certificate_status === "approved" && (
+        <Certificate dashboard={dashboard} />
         )
       }
 

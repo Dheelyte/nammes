@@ -5,12 +5,23 @@ from .models import Certificate, Document, Payment
 from .utils import send_approval_notification
 
 
-class UnapprovedCertificate(Certificate):
+admin.site.site_header = "NAMMES Admin Portal"
+admin.site.site_title = "NAMMES Admin Portal"
+admin.site.index_title = "Certification Portal "
+
+
+class PendingCertificate(Certificate):
     class Meta:
         proxy = True  # Reuses the original Certificate table
         verbose_name = "Pending Certificate"
 
-@admin.register(UnapprovedCertificate)
+class ApprovedCertificate(Certificate):
+    class Meta:
+        proxy = True  # Reuses the original Certificate table
+        verbose_name = "Approved Certificate"
+
+
+@admin.register(PendingCertificate)
 class CertificateAdmin(ImportExportModelAdmin):
     # Show only unapproved certificates
     def get_queryset(self, request):
@@ -113,3 +124,8 @@ class CertificateAdmin(ImportExportModelAdmin):
             print('Semd email confirmed')
         
         super().save_model(request, obj, form, change)
+
+@admin.register(ApprovedCertificate)
+class ApprovedCertificateAdmin(CertificateAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('user').filter(approved=True)

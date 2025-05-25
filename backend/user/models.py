@@ -48,8 +48,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return hasattr(self, 'document')
     
     def certificate_status(self):
-        if hasattr(self.user, 'certificate'):
-            return 'approved' if self.user.certificate.approved else 'pending'
+        if hasattr(self, 'certificate'):
+            return 'approved' if self.certificate.approved else 'pending'
         return 'none'
     
 

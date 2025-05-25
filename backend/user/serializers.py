@@ -67,15 +67,14 @@ class UserSerializer(serializers.ModelSerializer):
             'profile',
             'receipt_uploaded',
             'document_uploaded',
+            'certificate_status',
         )
 
-    def receipt_uploaded(self, obj):
-        return hasattr(obj, 'payment')
+    def get_receipt_uploaded(self, obj):
+        return obj.receipt_uploaded()
     
-    def document_uploaded(self, obj):
-        return hasattr(obj, 'document') 
+    def get_document_uploaded(self, obj):
+        return obj.document_uploaded()
     
-    def certificate_status(self, obj):
-        if hasattr(obj, 'certificate'):
-            return 'approved' if self.user.certificate.approved else 'pending'
-        return 'none'
+    def get_certificate_status(self, obj):
+        return obj.certificate_status()

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../auth/AuthContext';
-import { FaUser, FaEnvelope, FaSchool, FaIdCard, FaWallet, FaDownload, FaCheckCircle, FaTimesCircle, FaFileAlt } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaSchool, FaIdCard, FaCheckCircle } from 'react-icons/fa';
 
 import Header from './Header';
 import Document from './Document';
@@ -92,9 +92,7 @@ const Dashboard = () => {
       </div>
 
       <Progress 
-        documentUploaded={dashboard?.document_uploaded}
-        receiptUploaded={dashboard?.receipt_uploaded}
-        certificateStatus={dashboard?.certificate_status}
+        dashboard={dashboard}
       />
 
       {/* Upload Container */}

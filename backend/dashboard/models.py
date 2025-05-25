@@ -21,6 +21,9 @@ class Certificate(models.Model):
     date_issued = models.DateField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"Certificate ({self.id})"
+
 
 class Payment(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

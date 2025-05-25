@@ -62,7 +62,7 @@ const Document = ({ onUploadSuccess  }) => {
             <button 
               className="browse-button"
               onClick={() => inputRef.current.click()}
-              disabled={setIsSubmitting}
+              disabled={isSubmitting}
             >
               <FaUpload />
                 <span>Select File</span>
