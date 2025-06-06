@@ -1,7 +1,6 @@
 services:
   web:
-    build:
-      context: ./backend
+    build: ./backend
     command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./backend:/app
