@@ -46,8 +46,8 @@ const Document = ({ onUploadSuccess  }) => {
   }
 
   return (
-    <div className="action-container upload-section">
-      <h2><FaUpload /> Document Upload</h2>
+    <div className="action-container upload-section" id='document_upload'>
+      <h2><FaUpload /> Upload Document</h2>
       <div className="upload-area">
         {!file ? (
           <>
@@ -85,7 +85,7 @@ const Document = ({ onUploadSuccess  }) => {
               className="upload-button"
               onClick={handleDocumentUpload}
             >
-              Upload File
+              {isSubmitting ? "Uploading..." : "Upload File"}
             </button>
           </div>
         )}

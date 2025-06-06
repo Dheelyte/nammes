@@ -6,13 +6,12 @@ import { useAuth } from '../auth/AuthContext';
 import Certificate from './Certificate';
 import Api from '../Api';
 
-const Progress = ({ dashboard }) => {
+const Progress = ({ dashboard, onUploadSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [steps, setSteps] = useState([
-    { id: 1, title: "Document Upload", completed: dashboard.document_uploaded, stage: "Stage 1" },
-    { id: 2, title: "Payment Completion", completed: dashboard.receipt_uploaded, stage: "Stage 2" },
-    { id: 3, title: "Certificate Issued", completed: true, stage: "Stage 3" },
+    { id: 1, title: "Upload Document", completed: dashboard.document_uploaded, stage: "Stage 1", scrollID: "document_upload" },
+    { id: 2, title: "Complete Payment", completed: dashboard.receipt_uploaded, stage: "Stage 2", scrollID: "receipt_upload" },
   ]);
   const { user } = useAuth();
 
@@ -37,6 +36,7 @@ const Progress = ({ dashboard }) => {
         }
       })
       toast.success("Certificate application successful")
+      onUploadSuccess();
     } catch (error) {
       toast.error(error.response.data[0]);
     } finally {
@@ -44,9 +44,10 @@ const Progress = ({ dashboard }) => {
     }
   }
 
-  const handleDownloadCertificate = () => {
-    toast.loading("Certificate Downloading...")
-  }
+  const scroll = (elem) => {
+    console.log(elem)
+    document.getElementById(elem).scrollIntoView({ behavior: 'smooth' });
+  };
 
   const allStepsCompleted = steps.every(step => step.completed);
 
@@ -71,11 +72,11 @@ const Progress = ({ dashboard }) => {
             <div className="step-content">
               <div className="step-header">
                 <span className="stage-label">{step.stage}</span>
-                <h3>{step.title}</h3>
+                <h4>{step.title}</h4>
               </div>
               
-              <div className="status-indicator">
-                  <FaArrowRight className="status-icon" />
+              <div className="status-indicator" onClick={()=>{scroll(step.scrollID)}}>
+                <FaArrowRight className="status-icon" />
               </div>
             </div>
           </div>
@@ -89,7 +90,7 @@ const Progress = ({ dashboard }) => {
           disabled={!allStepsCompleted}
           onClick={handleCreateCertificate}
         >
-          {allStepsCompleted ? "Request Certificate" : "Complete All Steps to Apply"}
+          {allStepsCompleted ? "Request Certificate" : "Complete All Steps to Request for certificate"}
         </button>
         )
       }

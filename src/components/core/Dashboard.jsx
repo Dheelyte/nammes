@@ -13,7 +13,6 @@ const Dashboard = () => {
 
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [certificateId, setCertificateId] = useState('');
 
   const { user } = useAuth();
 
@@ -36,10 +35,10 @@ const Dashboard = () => {
     fetchDashboard();
   }, [])
 
-  const handleUploadSuccess = (type) => {
+  const handleUploadSuccess = (key, value) => {
     setDashboard(prev => ({
       ...prev,
-      [type]: true
+      [key]: value
     }));
   };
 
@@ -93,29 +92,15 @@ const Dashboard = () => {
 
       <Progress 
         dashboard={dashboard}
+        onUploadSuccess={() => handleUploadSuccess('certificate_status', 'pending')}
       />
 
       {/* Upload Container */}
-      <Document onUploadSuccess={() => handleUploadSuccess('document_uploaded')} />
+      <Document onUploadSuccess={() => handleUploadSuccess('document_uploaded', true)} />
 
       {/* Payment Container */}
-      <Pay onUploadSuccess={() => handleUploadSuccess('receipt_uploaded')} />
+      <Pay onUploadSuccess={() => handleUploadSuccess('receipt_uploaded', true)} />
 
-      {/* Verification Container */}
-      <div className="action-container verification-section">
-            <h2><FaCheckCircle /> Verify Certificate</h2>
-            <div className="verification-input">
-            <input
-                type="text"
-                placeholder="Enter Certificate ID"
-                value={certificateId}
-                onChange={(e) => setCertificateId(e.target.value)}
-            />
-            <button className="verify-button">
-                Check Validity
-            </button>
-            </div>
-        </div>
     </div>
     </>
   );

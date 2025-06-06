@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import { toast } from 'react-hot-toast'
+import { useAuth } from '../auth/AuthContext';
+import Api from '../Api';
 import logo from '../../assets/logo.png'
 import sign1 from '../../assets/signature-Tijani.png'
 import sign2 from '../../assets/signature-Azeez.png'
@@ -8,20 +10,10 @@ import sign3 from '../../assets/signature-olamilekan.png'
 
 const Certificate = ({ dashboard }) => {
     const [isGenerating, setIsGenerating] = useState(false);
+    const { user } = useAuth();
 
-    // Certificate data
-    const certificateData = {
-        userName: dashboard?.profile.full_name || 'John Doe',
-        courseName: 'Metallurgical and Materials Engineering',
-        dateIssued: dashboard?.date_issued || new Date().toLocaleDateString(),
-        certificateId: dashboard?.id || 'CERT-2023-0001',
-        school: dashboard?.school || 'Institution'
-    };
-
-
-    const generatePDF = async () => {
-        setIsGenerating(true);
-        toast.loading("Downloading certificate", {duration: 5000})
+    const generatePDF = async (data) => {
+        
         try {
         
             const doc = new jsPDF({
@@ -31,18 +23,9 @@ const Certificate = ({ dashboard }) => {
             });
 
             // Add semi-transparent logo
-            // const pageWidth = doc.internal.pageSize.getWidth();
-            // const pageHeight = doc.internal.pageSize.getHeight();
-            
             doc.saveGraphicsState();
             doc.setGState(new doc.GState({opacity: 0.02}));
-            doc.text('DRAFT', 150, 100, {align: 'center', baseline: 'middle'})
-            // doc.addImage(logo, 'PNG', 
-            //     x, 
-            //     y,
-            //     150,
-            //     100
-            // );
+
             doc.addImage(logo, 'PNG', 45, 20, 200, 210);
             doc.restoreGraphicsState();
             
@@ -53,8 +36,6 @@ const Certificate = ({ dashboard }) => {
             doc.rect(15, 15, 267, 180); // Match 30px margin equivalent
 
             // Add logo
-            // const logo = new Image();
-            // logo.src = '/react.svg';
             doc.addImage(logo, 'PNG', 20, 20, 35, 38);
 
             // Main content
@@ -78,7 +59,7 @@ const Certificate = ({ dashboard }) => {
             // Recipient name
             doc.setFontSize(41);
             doc.setFont(undefined, 'bold');
-            doc.text(certificateData.userName, 148, 110, { align: 'center' });
+            doc.text(dashboard.profile.full_name, 148, 110, { align: 'center' });
 
             // Course text
             doc.setFontSize(17);
@@ -90,8 +71,8 @@ const Certificate = ({ dashboard }) => {
 
             // Certificate details
             doc.setFontSize(11);
-            doc.text(`Certificate ID: ${certificateData.certificateId}`, 45, 150);
-            doc.text(`Date Issued: ${certificateData.dateIssued}`, 215, 150);
+            doc.text(`Certificate ID: ${data.id}`, 45, 150);
+            doc.text(`Date Issued: ${data.date_issued}`, 215, 150);
 
             // Signatures
             doc.addImage(sign1, 'PNG', 45, 160, 35, 15);
@@ -124,21 +105,40 @@ const Certificate = ({ dashboard }) => {
             // doc.text("Authorized Signature", 200, 175);
 
             // Save PDF
-            doc.save(`${certificateData.userName}-NAMMES certificate.pdf`);
+            doc.save(`${dashboard.profile.full_name}-NAMMES certificate.pdf`);
         } catch {
-            toast.error("An error occurred!")
-        } finally {
-            setIsGenerating(false)
+            toast.error("An error occurred during generation!")
         }
     };
 
+    const handleGetCertificate = async (e) => {
+        e.preventDefault();
+        setIsGenerating(true);
+        toast.loading("Downloading certificate")
+    
+        try {
+          const response = await Api.get('dashboard/get-certificate/', {
+            headers: {
+              Authorization: `Token ${user.token}`
+            }
+          })
+          await generatePDF(response.data)
+          toast.success('Document Downloaded successfully');
+        } catch (error) {
+          toast.error(error.message);
+        } finally {
+            setIsGenerating(false);
+            //toast.dismiss()
+        }
+    }
+
     return (
         <button 
-            onClick={generatePDF}
+            onClick={handleGetCertificate}
             disabled={isGenerating}
             className='apply-button'
         >
-            {isGenerating ? 'Generating...' : 'Download Certificate'}
+            {isGenerating ? 'Downloading...' : 'Download Certificate'}
         </button>
     );
 };

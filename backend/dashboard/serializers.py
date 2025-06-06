@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Document, Certificate, Payment
+from user.serializers import UserSerializer
 from .utils import validate_file
 
 
@@ -22,6 +23,9 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 
 class CertificateSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Certificate
-        fields = []
+        fields = ['id', 'date_issued', 'user']
+        read_only_fields = ['id', 'date_issued', 'user']

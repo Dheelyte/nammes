@@ -43,7 +43,7 @@ const UploadReceipt = ({ onUploadSuccess }) => {
         onUploadSuccess();
         toast.success('Payment receipt uploaded')
       } catch (error) {
-        toast.success('An error occurred');
+        toast.error('An error occurred');
       } finally {
         setIsSubmitting(false);
         handleRemove();
@@ -86,7 +86,7 @@ const UploadReceipt = ({ onUploadSuccess }) => {
                 onClick={handlePaymentReceiptUpload}
                 disabled={isSubmitting}
               >
-                Upload File
+                {isSubmitting ? "Uploading..." : "Upload File"}
               </button>
             </div>
           )}
@@ -111,19 +111,24 @@ const Pay = ({ onUploadSuccess }) => {
     setTimeout(() => setCopiedField(null), 2000);
   };
 
+  const scroll = (elem) => {
+    console.log(elem)
+    document.getElementById(elem).scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="action-container payment-section">
+    <div className="action-container payment-section" id='receipt_upload'>
         <h2><FaWallet /> Complete Payment</h2>
         <div className="payment-details">
           <p className="price"><TbCurrencyNaira /> <span>1000</span></p>
           <p className="description">One-time certificate fee</p>
-          <button className="pay-button" onClick={()=>setShowPaymentDetails(true)}>
+          <button className="pay-button" onClick={()=>{setShowPaymentDetails(true); scroll("payment-details")}}>
             Proceed to Payment
           </button>
         </div>
 
       {showPaymentDetails && (
-        <div className="payment-details">
+        <div className="payment-details" id="payment-details">
           <h3>Bank Transfer Details</h3>
           
           <div className="detail-row">

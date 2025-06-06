@@ -25,6 +25,19 @@ class Certificate(models.Model):
         return f"Certificate ({self.id})"
 
 
+class PendingCertificate(Certificate):
+    class Meta:
+        proxy = True
+        verbose_name = "Pending Certificate"
+        verbose_name_plural = "Pending Certificates"
+
+class ApprovedCertificate(Certificate):
+    class Meta:
+        proxy = True
+        verbose_name = "Approved Certificate"
+        verbose_name_plural = "Approved Certificates"
+
+
 class Payment(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     receipt = models.FileField(upload_to='documents')

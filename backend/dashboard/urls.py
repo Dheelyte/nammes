@@ -4,7 +4,8 @@ from .views import (
     DocumentUploadView,
     CreatePaymentView,
     CreateCertifiateView,
-    DownloadCertificateView
+    GetCertificateView,
+    VerifyCertificateView
 )
 
 
@@ -13,5 +14,6 @@ urlpatterns = [
     path('upload-document/', DocumentUploadView.as_view()),
     path('upload-receipt/', CreatePaymentView.as_view()),
     path('create-certificate/', CreateCertifiateView.as_view()),
-    path('download-certificate/', DownloadCertificateView.as_view())
+    path('get-certificate/', GetCertificateView.as_view()),
+    path('verify-certificate/<certificate_id>/', VerifyCertificateView.as_view())
 ]

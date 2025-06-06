@@ -116,7 +116,7 @@ const Register = () => {
                 <div className="success-message">
                   <h3>🎉 Welcome aboard, {formData.full_name}!</h3>
                   <p>Proceed to your dashboard for verification</p>
-                  <Link to='/'>
+                  <Link to='/dashboard'>
                     <span>Go to Dashboard</span>
                     <FaArrowAltCircleRight />
                 </Link>
@@ -201,6 +201,13 @@ const Register = () => {
                 <button type="submit" disabled={isSubmitting} className="submit-btn">
                   {isSubmitting ? 'Creating Account...' : 'Create account'}
                 </button>
+
+                <p className='login-text'>
+                  Already have an account? 
+                  <Link to='/login'>
+                     Login
+                  </Link>
+                </p>
                 </form>
               )}
             </div>

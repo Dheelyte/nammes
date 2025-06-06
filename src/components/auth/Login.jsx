@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FaShieldAlt, FaCheckCircle, FaCertificate, FaLock, FaEnvelope } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 
@@ -124,6 +124,13 @@ const Login = () => {
                 <button type="submit" disabled={isSubmitting} className="submit-btn">
                   {isSubmitting ? 'Loggin In...' : 'Login'}
                 </button>
+
+                <p className='login-text'>
+                  Don't have an account? 
+                  <Link to='/register'>
+                    Create Account
+                  </Link>
+                </p>
                 </form>
             </div>
           </div>

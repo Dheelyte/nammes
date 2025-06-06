@@ -24,10 +24,10 @@ class CreatePaymentView(generics.CreateAPIView):
     serializer_class = PaymentSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    # def perform_create(self, serializer):
-    #     if hasattr(self.request.user, 'payment'):
-    #         raise serializers.ValidationError("Payment already exists")
-    #     serializer.save(user=self.request.user)
+    def perform_create(self, serializer):
+        if hasattr(self.request.user, 'payment'):
+            raise serializers.ValidationError("Payment already exists")
+        serializer.save(user=self.request.user)
 
 
 class CreateCertifiateView(generics.CreateAPIView):
@@ -49,6 +49,13 @@ class DashboardView(APIView):
         return Response(UserSerializer(user).data)
 
 
+class GetCertificateView(generics.RetrieveAPIView):
+    queryset = Certificate.objects.all()
+    serializer_class = CertificateSerializer
+    lookup_field = 'id'
+    permission_classes = [permissions.IsAuthenticated]
+    
+
 class DownloadCertificateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -58,3 +65,16 @@ class DownloadCertificateView(APIView):
             if user.certificate.approved:
                 return Response({"certificate_id": user.certificate.id})
             return Response(status=status.HTTP_423_LOCKED)
+
+
+class VerifyCertificateView(APIView):
+    def get(self, request, certificate_id):
+        try:
+            certificate = Certificate.objects.get(id=certificate_id, approved=True)
+        except Certificate.DoesNotExist:
+            return Response({"error": "A certificate with this ID does not exist"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        certificate_serializer = CertificateSerializer(certificate)
+        return Response(certificate_serializer.data, status=status.HTTP_200_OK)
