@@ -1,7 +1,8 @@
 services:
   web:
-    build: ./backend
-    command: gunicorn myproject.wsgi:application --bind 0.0.0.0:8000
+    build:
+      context: ./backend
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./backend:/app
     env_file:
