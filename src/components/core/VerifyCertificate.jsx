@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { FaCheckCircle, FaTimesCircle, FaUser, FaCertificate, FaCalendarAlt, FaUniversity, FaIdCard } from 'react-icons/fa';
 import Api from "../Api";
 import Header from "./Header";
-import Loading from "./loading";
+import Loading from "./Loading";
 
 const VerifyCertificate = () => {
   const { certificate_id } = useParams();
