@@ -2,7 +2,7 @@ import { AuthProvider } from './components/auth/AuthContext';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import Home from './components/landing/home';
+import Home from './components/landing/Home';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Register from './components/auth/Register'
 import Login from './components/auth/Login';
