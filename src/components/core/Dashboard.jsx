@@ -7,7 +7,7 @@ import Document from './Document';
 import Pay from './Pay';
 import Progress from './Progress';
 import Api from '../Api';
-import Loading from './loading';
+import Loading from './Loading';
 
 const Dashboard = () => {
 
