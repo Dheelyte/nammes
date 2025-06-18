@@ -158,5 +158,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.config(default=env['DATABASE_URL'])
+    'default': dj_database_url.config(default=env('DATABASE_URL'))
 }
