@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import environ
 # Initialise environment variables
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-ygfh@=99a2qyhu26-2tt4tadf8rbo5g4r05jkj5n!bpd49=byc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["13.60.64.2", "127.0.0.1"]
+ALLOWED_HOSTS = ["51.20.188.20", "127.0.0.1"]
 
 
 # Application definition
