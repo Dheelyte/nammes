@@ -83,17 +83,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -147,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Production settings.py
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -157,7 +146,23 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = 'username'
 # EMAIL_HOST_PASSWORD = 'password'
 
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL'))
-}
+
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+if DEBUG:
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+else:
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default=env('DATABASE_URL'))
+    }

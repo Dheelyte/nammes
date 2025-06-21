@@ -117,7 +117,7 @@ const Certificate = ({ dashboard }) => {
         toast.loading("Downloading certificate")
     
         try {
-          const response = await Api.get('dashboard/get-certificate/', {
+          const response = await Api.get('dashboard/download-certificate/', {
             headers: {
               Authorization: `Token ${user.token}`
             }
@@ -128,7 +128,7 @@ const Certificate = ({ dashboard }) => {
           toast.error(error.message);
         } finally {
             setIsGenerating(false);
-            //toast.dismiss()
+            toast.dismiss()
         }
     }
 

@@ -47,13 +47,6 @@ class DashboardView(APIView):
     def get(self, request):
         user = request.user
         return Response(UserSerializer(user).data)
-
-
-class GetCertificateView(generics.RetrieveAPIView):
-    queryset = Certificate.objects.all()
-    serializer_class = CertificateSerializer
-    lookup_field = 'id'
-    permission_classes = [permissions.IsAuthenticated]
     
 
 class DownloadCertificateView(APIView):
@@ -63,7 +56,8 @@ class DownloadCertificateView(APIView):
         user = request.user
         if hasattr(user, 'certificate'):
             if user.certificate.approved:
-                return Response({"certificate_id": user.certificate.id})
+                CertificateSerializer(user.certificate)
+                return Response(CertificateSerializer(user.certificate).data)
             return Response(status=status.HTTP_423_LOCKED)
 
 
