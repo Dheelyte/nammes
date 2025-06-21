@@ -9,6 +9,72 @@ body {
   color: #2d3748;
 }
 
+.sample-certificate {
+  margin: 0 auto;
+}
+
+.sample-certificate img {
+  border-radius: 30px;
+}
+
+.dual-cta-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+  
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 220px;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .verify-cta {
+    background: #ffffff;
+    color: #6b46c1;
+    border: 2px solid #6b46c1;
+  }
+  
+  .verify-cta:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(107, 70, 193, 0.15);
+  }
+  
+  .apply-cta {
+    background: #6b46c1;
+    color: white;
+    border: 2px solid #6b46c1;
+  }
+  
+  .apply-cta:hover {
+    background: #553c9a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(107, 70, 193, 0.25);
+  }
+
+  
+  @media (max-width: 480px) {
+    .dual-cta-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .cta-button {
+      width: 100%;
+    }
+  }
+
 .split-container {
   display: flex;
   min-height: 100vh;
