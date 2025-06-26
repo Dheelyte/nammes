@@ -1,4 +1,6 @@
 import { FaFile } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
 
 const Footer = () => {
     return (
@@ -15,26 +17,26 @@ const Footer = () => {
           <div className="footer-links">
             <div className="link-group">
               <h4>Platform</h4>
-              <a href="/">Features</a>
-              <a href="/">Pricing</a>
-              <a href="/">Testimonials</a>
-              <a href="/">Security</a>
+              <Link to="/">Features</Link>
+              <Link to="/">Pricing</Link>
+              <Link to="/">Testimonials</Link>
+              <Link to="/">Security</Link>
             </div>
             
             <div className="link-group">
               <h4>Resources</h4>
-              <a href="https://youtube.com/@midecaliengineer">YouTube Channel</a>
-              <a href="#">Constitution and Senate Act</a>
-              <a href="#">Help Center</a>
-              <a href="#">Blog</a>
+              <Link to="https://youtube.com/@midecaliengineer">YouTube Channel</Link>
+              <Link to="#">Constitution and Senate Act</Link>
+              <Link to="#">Help Center</Link>
+              <Link to="#">Blog</Link>
             </div>
             
             <div className="link-group">
               <h4>Socials</h4>
-              <a href="https://instagram.com/nammes_nigeriahq"></a>
-              <a href="https://x.com/nammesnigeriaHQ">Twitter / X</a>
-              <a href="https://youtube.com/@midecaliengineer">YouTube</a>
-              <a href="mailto:nammesnigeriaofficial@gmail.com">Email</a>
+              <Link to="https://instagram.com/nammes_nigeriahq"></Link>
+              <Link to="https://x.com/nammesnigeriaHQ">Twitter / X</Link>
+              <Link to="https://youtube.com/@midecaliengineer">YouTube</Link>
+              <Link to="mailto:nammesnigeriaofficial@gmail.com">Email</Link>
             </div>
           </div>
         </div>

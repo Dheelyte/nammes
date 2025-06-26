@@ -3,6 +3,7 @@ import logo from '../../assets/logo.png'
 import sampleCert from '../../assets/samplecert.png'
 import { Link } from 'react-router-dom';
 
+
 const Hero = () => {
     return (
       <header className="hero-section">
