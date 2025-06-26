@@ -46,6 +46,7 @@ const Login = () => {
           toast.success('Log in successful');
         } catch (error) {
           console.error('Check your login information and try again');
+          toast.error(error.response.data?.non_field_errors)
         } finally {
           setIsSubmitting(false);
         }

@@ -14,7 +14,7 @@ const Features = () => {
               <FaShieldAlt />
             </div>
             <h3>Tamper-Proof Security</h3>
-            <p>Blockchain technology ensures certificates cannot be altered or forged</p>
+            <p>Our technology ensures certificates cannot be altered or forged</p>
           </div>
           
           <div className="feature-card">
@@ -31,14 +31,6 @@ const Features = () => {
             </div>
             <h3>Lifetime Access</h3>
             <p>Graduates maintain permanent access to their digital credentials</p>
-          </div>
-          
-          <div className="feature-card">
-            <div className="feature-icon">
-              <FaStepForward />
-            </div>
-            <h3>Streamlined Processes</h3>
-            <p>Reduce administrative burden with automated certificate issuance</p>
           </div>
         </div>
       </section>

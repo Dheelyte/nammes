@@ -11,23 +11,23 @@ const Hero = () => {
             <img style={{width: '40px'}} src={logo} alt="" />
             <span>NAMMES NIGERIA</span>
           </div>
-          <button className="login-btn">Login</button>
+          <Link to='/login' className="login-btn">Login</Link>
         </nav>
         
         <div className="hero-content">
-          <h1>Secure, Verifiable Digital Certificates</h1>
-          <p>Issue, manage, and verify academic credentials with blockchain technology</p>
+          <h1>Get Your Verifiable, Digital NAMMES Nigeria Certificates</h1>
+          <p>Issue, manage, and verify academic credentials</p>
           
           <div className="dual-cta-container">
-            <a href="/verify" className="cta-button verify-cta">
+            <Link to="/verify" className="cta-button verify-cta">
               <FaSearch className="cta-icon" />
               <span>Verify a Certificate</span>
-            </a>
+            </Link>
             
-            <a href="/apply" className="cta-button apply-cta">
+            <Link to="/register" className="cta-button apply-cta">
               <FaFile className="cta-icon" />
-              <span>Get a Certificate</span>
-            </a>
+              <span>Get Your Certificate</span>
+            </Link>
           </div>
 
           <div className="sample-certificate">
