@@ -11,7 +11,7 @@ const Footer = () => {
               <FaFile className="logo-icon" />
               <span>NAMMES <span className="highlight">Cert</span></span>
             </div>
-            <p>Secure, verifiable digital credentials for the modern world.</p>
+            <p>Secure, verifiable digital credentials for the NAMMES members.</p>
           </div>
           
           <div className="footer-links">

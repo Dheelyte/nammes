@@ -16,16 +16,11 @@ const Hero = () => {
         </nav>
         
         <div className="hero-content">
-          <h1>Get Your Verifiable, Digital NAMMES Nigeria Certificates</h1>
-          <p>Issue, manage, and verify academic credentials</p>
+          <h1>Get Your Digital NAMMES Membership Certificates</h1>
+          <p>Verifiable certificates with an instant validation system</p>
           
-          <div className="dual-cta-container">
-            <Link to="/verify" className="cta-button verify-cta">
-              <FaSearch className="cta-icon" />
-              <span>Verify a Certificate</span>
-            </Link>
-            
-            <Link to="/register" className="cta-button apply-cta">
+          <div className="dual-cta-container">          
+            <Link to="/register" className="cta-button verify-cta">
               <FaFile className="cta-icon" />
               <span>Get Your Certificate</span>
             </Link>

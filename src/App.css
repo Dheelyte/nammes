@@ -42,6 +42,68 @@ body {
     justify-content: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
+
+  .verify-container {
+    display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: left !important;
+  padding: 6rem 2rem;
+  background: var(--secondary);
+  }
+
+  .certificate-verification {
+  
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.certificate-verification h2 {
+  color: #2f2e41;
+  margin-bottom: 1.5rem;
+}
+
+.verification-form {
+  display: flex;
+  gap: 10px;
+}
+
+.certificate-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.certificate-input:focus {
+  outline: none;
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+}
+
+.verify-button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.verify-button:hover {
+  background: #544fd1;
+}
+
+@media (max-width: 600px) {
+  .verification-form {
+    flex-direction: column;
+  }
+}
   
   .verify-cta {
     background: #ffffff;
@@ -60,7 +122,6 @@ body {
     color: white;
     border: 2px solid #6b46c1;
   }
-  .apply-cta 
   
   .apply-cta:hover {
     background: #553c9a;
@@ -330,11 +391,6 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
 }
 
 .app-title {
@@ -761,13 +817,6 @@ body {
   border-radius: 4px;
 }
 
-.verify-button {
-  background: #4299e1;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-}
 .status-container {
   border: 2px solid #e2e8f0;
   border-radius: 8px;
@@ -993,7 +1042,7 @@ body {
 .hero-section {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: var(--white);
-  padding: 2rem 0 6rem;
+  padding: 0 0 6rem;
   position: relative;
   overflow: hidden;
 }
@@ -1013,6 +1062,7 @@ body {
   align-items: center;
   font-size: 1.8rem;
   font-weight: 700;
+  gap: 15px;
 }
 
 .logo-icon {
@@ -1429,9 +1479,11 @@ body {
 
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
     gap: 1rem;
-    padding-top: 1rem;
+    padding: 1rem;
+  }
+  .navbar span {
+    font-size: 20px;
   }
   
   .nav-links {

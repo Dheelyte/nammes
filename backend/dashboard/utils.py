@@ -2,11 +2,12 @@ import secrets
 import string
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.conf import settings
 from rest_framework import serializers
 
 
-BASE_URL = "http:127.0.0.1:8000"
-FROM_EMAIL = "nammesnigeria@gmail.com"
+BASE_URL = settings.ALLOWED_HOSTS
+FROM_EMAIL = "NAMMES Nigeria <nammesnigeriaofficial@gmail.com>"
 
 
 def generate_certificate_id(length=10):
@@ -30,16 +31,16 @@ def request_approval_notification(user, certificate):
         'certificate_id': certificate.id,
         'issue_date': certificate.date_issued.strftime("%B %d, %Y"),
         'program_name': "NAMMES Nigeria Certificate of Membership",
-        'download_link': f"{BASE_URL}/admin/dashboard/pendingcertificate/{certificate.id}/change/",
+        'download_link': f"{BASE_URL[1]}/admin/dashboard/pendingcertificate/{certificate.id}/change/",
     }
     
     # Render HTML content
-    text_content = render_to_string('certificate_request_approval_email.txt', context)
-    html_content = render_to_string('certificate_request_approval_email.html', context)
+    text_content = render_to_string('request_approval_notification.txt', context)
+    html_content = render_to_string('request_approval_notification.html', context)
     
     # Create email
     email = EmailMultiAlternatives(
-        subject="Review Certificate Request!",
+        subject="Certificate Approval Request!",
         body=text_content,
         from_email=FROM_EMAIL,
         to=[user.email]
@@ -54,7 +55,7 @@ def send_approval_notification(user, certificate):
         'certificate_id': certificate.id,
         'issue_date': certificate.date_issued.strftime("%B %d, %Y"),
         'program_name': "NAMMES Nigeria Certificate of Membership",
-        'download_link': f"{BASE_URL}/dashboard/",
+        'download_link': f"{BASE_URL[0]}/dashboard/",
     }
     
     # Render HTML content
@@ -63,7 +64,7 @@ def send_approval_notification(user, certificate):
     
     # Create email
     email = EmailMultiAlternatives(
-        subject="Your Certificate Has Been Approved!",
+        subject="Your NAMMES NG Certificate Has Been Approved!",
         body=text_content,  # Create a text version too
         from_email=FROM_EMAIL,
         to=[user.email]
