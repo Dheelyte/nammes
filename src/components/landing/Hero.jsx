@@ -1,4 +1,4 @@
-import { FaFile, FaSearch } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import logo from '../../assets/logo.png'
 import sampleCert from '../../assets/samplecert.png'
 import { Link } from 'react-router-dom';
@@ -20,10 +20,9 @@ const Hero = () => {
           <p>Verifiable certificates with an instant validation system</p>
           
           <div className="dual-cta-container">          
-            <Link to="/register" className="cta-button verify-cta">
-              <FaFile className="cta-icon" />
-              <span>Get Your Certificate</span>
-            </Link>
+            <Link to='/register' className="primary-btn">
+              Get Your Certificate <FaArrowRight />
+              </Link>
           </div>
 
           <div className="sample-certificate">
