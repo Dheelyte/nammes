@@ -23,11 +23,26 @@ const Register = () => {
       const [success, setSuccess] = useState(false);
     
       const schools = [
-        "University of Technology",
-        "Science Institute",
-        "Engineering College",
-        "Business Academy",
-        "Medical University"
+        "Federal University of Technology, Owerri (FUTO)",
+        "University of Lagos (UNILAG)",
+        "Yaba College of Technology (YABATECH)",
+        "Ahmadu Bello University (ABU)",
+        "Federal University of Technology, Minna (FUTMINA)",
+        "Federal University of Technology, Akure (FUTA)",
+        "University of Ilorin (UNILORIN)",
+        "University of Benin (UNIBEN)",
+        "Kwara State Polytechnic (KSP KWARA)",
+        "Kwara State University (KSU KWARA)",
+        "Obafemi Awolowo University (OAU)",
+        "Federal University Oye-Ekiti (FUOYE)",
+        "Federal Polytechnic, Idah (POLYIDAH)",
+        "University of Nigeria, Nsukka (UNN)",
+        "Nnamdi Azikiwe University (UNIZIK)",
+        "Enugu State University of Science and Technology (ESUT)",
+        "African University of Science and Technology (AUST) Abuja",
+        "ogi State Polytechnic Lokoja",
+        "Airforce Institute of Technology (AFIT) Kaduna",
+        "Confluence University of Science and Technology CUSTECH, Osara"
       ];
     
     
@@ -38,9 +53,6 @@ const Register = () => {
         if (!formData.full_name.trim()) newErrors.full_name = ['Full name is required'];
         if (!emailRegex.test(formData.email)) newErrors.email = ['Invalid email address'];
         if (!formData.school.trim()) newErrors.school = ['School name is required'];
-        if (!formData.matric_number.match(/^[A-Za-z0-9]{6,12}$/)) {
-          newErrors.matric_number = ['Invalid matric number format'];
-        }
         if (!formData.password.trim()) newErrors.password = ['Password is required'];
 
     
@@ -64,7 +76,6 @@ const Register = () => {
           })
           login(response.data);
           setSuccess(true);
-          toast.success('Registration successful');
           toast.success('Registration successful');
         } catch (error) {
           toast.error('An error occurred');

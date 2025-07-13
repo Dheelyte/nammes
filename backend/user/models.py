@@ -57,7 +57,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
-    matric_number = models.IntegerField()
+    matric_number = models.CharField()
 
     def __str__(self):
         return self.user.email
