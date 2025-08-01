@@ -100,9 +100,9 @@ const Pay = ({ onUploadSuccess }) => {
   const [copiedField, setCopiedField] = useState(null);
 
   const bankDetails = {
-    accountNumber: '1234567890',
-    accountName: 'NAMMES',
-    bankName: 'UNION BANK'
+    accountNumber: '2320436198',
+    accountName: 'NAMMES NIGERIA',
+    bankName: 'United Bank for Africa (UBA)'
   };
 
   const handleCopy = (field, value) => {
