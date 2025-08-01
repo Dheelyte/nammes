@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const Header = () => {
@@ -14,9 +15,9 @@ const Header = () => {
           <h1 className="app-title">NAMMES Certification</h1>
         </div>
         
-        <button className="cta-button">
+        <Link to='/' className="cta-button">
           <FaCheckCircle /> Verify
-        </button>
+        </Link>
       </div>
     </header>
   );

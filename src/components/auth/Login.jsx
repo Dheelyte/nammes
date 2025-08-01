@@ -59,7 +59,7 @@ const Login = () => {
 
       useEffect(() => {
         if (success) {
-            navigate('/');
+            navigate('/dashboard');
         }
     }, [success, navigate]);
     
