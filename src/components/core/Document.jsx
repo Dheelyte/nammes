@@ -47,7 +47,8 @@ const Document = ({ onUploadSuccess  }) => {
 
   return (
     <div className="action-container upload-section" id='document_upload'>
-      <h2><FaUpload /> Upload Document</h2>
+      <h2 style={{marginBottom: '10px'}}><FaUpload /> Upload Document</h2>
+      <p><b>Accepted documents:</b> JAMB Admission Letter, Course Registration Form, School ID</p>
       <div className="upload-area">
         {!file ? (
           <>
