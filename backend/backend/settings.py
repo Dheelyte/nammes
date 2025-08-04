@@ -171,20 +171,20 @@ else:
     SECURE_SSL_REDIRECT = True
 
 
-    # AWS S3 Configuration
-    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = 'eu-north-1'  # Change to your bucket's region
-    AWS_S3_FILE_OVERWRITE = False  # Recommended to avoid overwriting files with the same name
-    AWS_DEFAULT_ACL = 'public-read' # Change if your files should not be publicly accessible
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = 'eu-north-1'  # Change to your bucket's region
+AWS_S3_FILE_OVERWRITE = False  # Recommended to avoid overwriting files with the same name
+AWS_DEFAULT_ACL = 'public-read' # Change if your files should not be publicly accessible
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-    # Optional: Configure static files to also be served from S3
-    STATICFILES_STORAGE = 'dashboard.storage_backends.StaticStorage'
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+# Optional: Configure static files to also be served from S3
+STATICFILES_STORAGE = 'dashboard.storage_backends.StaticStorage'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
-    # Example to put media files in a 'media/' subfolder
-    MEDIA_LOCATION = 'media'
-    DEFAULT_FILE_STORAGE = 'dashboard.storage_backends.MediaStorage' # We'll create this class
+# Example to put media files in a 'media/' subfolder
+MEDIA_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'dashboard.storage_backends.MediaStorage' # We'll create this class
