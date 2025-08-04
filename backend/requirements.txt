@@ -11,7 +11,7 @@ django-storages==1.14.6
 djangorestframework==3.16.0
 jmespath==1.0.1
 pillow==11.2.1
-psycopg-binary==3.2.9
+psycopg==3.2.9
 python-dateutil==2.9.0.post0
 s3transfer==0.13.1
 six==1.17.0
