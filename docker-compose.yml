@@ -7,7 +7,7 @@ services:
     volumes:
       - ./backend:/app
       - static_volume:/app/staticfiles
-      - ./backend/media:/app/media
+      - media_volume:/app/media
     env_file:
       - ./backend/.env
 
@@ -21,9 +21,10 @@ services:
       - ./backend/nginx/html:/usr/share/nginx/html
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - static_volume:/app/staticfiles
-      - ./backend/media:/app/media
+      - media_volume:/app/media
     depends_on:
       - web
 
 volumes:
   static_volume:
+  media_volume:
