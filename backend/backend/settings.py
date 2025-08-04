@@ -181,7 +181,6 @@ STORAGES = {
             "access_key": env('AWS_ACCESS_KEY_ID'),
             "secret_key": env('AWS_SECRET_ACCESS_KEY'),
             "region_name": "eu-north-1", # e.g., 'us-east-1'
-            "default_acl": "public-read", # or "private"
             "file_overwrite": False, # Set to True if you want to overwrite existing files
             # Add other S3Boto3Storage options as needed
         }
@@ -194,7 +193,6 @@ STORAGES = {
             "access_key": env('AWS_ACCESS_KEY_ID'),
             "secret_key": env('AWS_SECRET_ACCESS_KEY'),
             "region_name": "eu-north-1",
-            "default_acl": "public-read",
             # Add other S3Boto3Storage options as needed
         }
     },
@@ -206,7 +204,6 @@ STORAGES = {
             "access_key": env('AWS_ACCESS_KEY_ID'),
             "secret_key": env('AWS_SECRET_ACCESS_KEY'),
             "region_name": "eu-north-1",
-            "default_acl": "public-read",
             "file_overwrite": False,
             # Add other S3Boto3Storage options as needed
         }
