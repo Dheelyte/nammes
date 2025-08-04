@@ -9,7 +9,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     full_name = serializers.CharField()
     school = serializers.CharField()
-    matric_number = serializers.IntegerField()
+    matric_number = serializers.CharField()
 
     class Meta:
         model = CustomUser
