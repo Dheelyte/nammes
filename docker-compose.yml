@@ -10,6 +10,8 @@ services:
       - media_volume:/app/media
     env_file:
       - ./backend/.env
+    db:
+      condition: service_healthy
 
   nginx:
     image: nginx:latest
@@ -25,6 +27,24 @@ services:
     depends_on:
       - web
 
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "mydatabase", "-U", "user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 volumes:
   static_volume:
   media_volume:
+  postgres_data:
+    external: true
