@@ -33,6 +33,7 @@ const Register = () => {
         "University of Benin (UNIBEN)",
         "Kwara State Polytechnic (KSP KWARA)",
         "Kwara State University (KSU KWARA)",
+        "Metallurgical Training Institute, Anambra State",
         "Obafemi Awolowo University (OAU)",
         "Federal University Oye-Ekiti (FUOYE)",
         "Federal Polytechnic, Idah (POLYIDAH)",
